@@ -3,7 +3,7 @@
 #include<cmath>
 #include<cstdlib>
 #include<ctime>
-#include"OpenCode/EasyCoding.h"
+#include"../../OpenCode/EasyCoding.h"
 
 using CodeType = unsigned long long;
 
