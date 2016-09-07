@@ -7,6 +7,7 @@
 #include<functional>
 #include<vector>
 #include<algorithm>
+#include<cstdint>
 
 namespace OpenCode
 {
@@ -69,14 +70,14 @@ namespace OpenCode
 		LT& operator()(LT& target)
 		{
 			std::vector<size_t> buffer;
-			for (int i = 0; i < code_size * distans; i++)
+			for (size_t i = 0; i < code_size * distans; i++)
 				buffer.push_back(i);
 			LT k;
 			std::random_device rd;
-			for (int i = 0; i < code_size; i++)
+			for (size_t i = 0; i < code_size; i++)
 			{
 				LT::value_type l = 0;
-				for (int j = 0; j < 3; j++)
+				for (int j = 0; j < distans; j++)
 				{
 					std::uniform_int_distribution<unsigned int> uni(0, std::size(buffer) - 1);
 					size_t bi = uni(rd);
@@ -97,6 +98,72 @@ namespace OpenCode
 	constexpr KeyGenerator<LT> key_genaration(LT list, size_t code_size, size_t distans)
 	{
 		return KeyGenerator<LT>(code_size, distans);
+	}
+
+	template<typename CLT,typename VLT>
+	class ListConvert
+	{
+		size_t ct_size;
+		size_t vt_size;
+	public:
+		ListConvert():ct_size(sizeof(CLT::value_type) * 8),vt_size(sizeof(VLT::value_type) * 8){}
+		ListConvert(size_t code_type_size, size_t value_type_size) :ct_size(code_type_size), vt_size(value_type_size) {}
+		VLT operator()(CLT& target)
+		{
+			VLT ans;
+			if (ct_size < vt_size)
+			{
+				size_t conv = vt_size / ct_size;
+				auto e = std::end(target);
+				for (auto p = std::begin(target); p != e;)
+				{
+					VLT::value_type b = 0;
+					for (size_t i = 0; i < conv && p != e; i++, p++)
+					{
+						b <<= ct_size;
+						b += static_cast<VLT::value_type>(*p) % (1 << ct_size);
+					}
+					ans.push_back(b);
+				}
+			}
+			else if (ct_size > vt_size)
+			{
+				size_t conv = ct_size / vt_size;
+				auto e = std::end(target);
+				for (auto p = std::begin(target); p != e; p++)
+				{
+					CLT::value_type b = *p;
+					for (int i = conv - 1; i >= 0; i--)
+					{
+						ans.push_back((b >> (vt_size * i)) % (1 << vt_size));
+					}
+				}
+			}
+			else
+			{
+				auto e = std::end(target);
+				for (auto p = std::begin(target); p != e; p++)
+					ans.push_back(static_cast<VLT::value_type>(*p));
+			}
+			return ans;
+		}
+	};
+
+	template<typename CLT,typename VLT>
+	constexpr ListConvert<CLT,VLT> list_convert(CLT before,VLT after)
+	{
+		return ListConvert<CLT,VLT>();
+	}
+	template<typename CLT,typename VLT>
+	constexpr ListConvert<CLT,VLT> list_convert_from(CLT before,VLT after,size_t before_size)
+	{
+		return ListConvert<CLT, VLT>(before_size, sizeof(VLT::value_type) * 8);
+	}
+
+	template<typename CLT,typename VLT>
+	constexpr ListConvert<CLT,VLT> list_convert_to(CLT before,VLT after,size_t after_size)
+	{
+		return ListConvert<CLT, VLT>(sizeof(CLT::value_type) * 8, after_size);
 	}
 }
 
