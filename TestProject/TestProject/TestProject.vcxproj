@@ -142,6 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\OpenCode\CodeCore.h" />
+    <ClInclude Include="..\..\OpenCode\Decode.h" />
+    <ClInclude Include="..\..\OpenCode\EasyCoding.h" />
+    <ClInclude Include="..\..\OpenCode\Encode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
