@@ -1,51 +1,39 @@
 #include<vector>
 #include<string>
 #include<iostream>
-#include<cmath>
-#include<cstdlib>
-#include<ctime>
-#include"../../OpenCode/EasyCoding.h"
+#include"../../OpenCode/EasyCoding.hpp"
 
-using CodeType = unsigned long long;
-
-template<typename T>
-void print_vec(std::vector<T> t)
-{
-	std::cout << std::hex;
-	for(auto&& v : t)
-		std::cout << static_cast<unsigned long long int>(v) << " ";
-	std::cout << std::dec << std::endl;
-}
+using CodeType = std::vector<unsigned long long>;
+using namespace std;
+using namespace OpenCode;
 
 int main()
 {
-	std::string str;
-	std::cin >> str;
+	CodeType k, t;
+	string str,rstr;
+	random_device rd;
+	unsigned long long pass = rd();
 
-	std::vector<uint8_t> v8 = str | OpenCode::list_convert(str, v8);
+	cout << "test string:" << flush;
+	cin >> str;
+	cout << "----start defult test----" << endl;
+	cout << "strint:" << str << endl;
+	cout << "encode:" << (str | auto_encode(str, k, 4, 4)) << endl;
+	cout << "decode:" << (str | auto_decode(str, k, 4)) << endl;
 
-	std::vector<CodeType> t, t2;
+	k = CodeType();
+	cout << "----start pass test-----" << endl;
+	cout << "string:" << str << endl;
+	cout << "password:" << pass << endl;
+	cout << "encode:" << (str | auto_encode(str, k, 4, 4, pass)) << endl;
+	rstr = str;
+	cout << "decode:" << (str | auto_decode(str, k, 4)) << endl;
 
-	t = v8 | OpenCode::list_convert_to(v8, t, 4);
-
-	std::vector<CodeType> k;
-	k | OpenCode::key_genaration(k, 1 << 4, 4);
-
-	std::vector<CodeType> k2 = k;
-	k2 | OpenCode::noise_generation(k2, 1 << 4, 1);
-
-	t | OpenCode::encode(k2, 1 << 4, 1);
-
-	v8 = t | OpenCode::list_convert_from(t, v8, 4);
-	str = v8 | OpenCode::list_convert(v8, str);
-	std::cout << "encode:" << str << std::endl;
-
-	t | OpenCode::decode(k);
-
-	v8 = t | OpenCode::list_convert_from(t, v8, 4);
-	str = v8 | OpenCode::list_convert(v8, str);
-	std::cout << "decode:" << str << std::endl;
-
+	cout << "----reflush key codes----" << endl;
+	k | key_genaration(k, 1 << 4, 4, pass);
+	cout << "password:" << pass << endl;
+	cout << "decode:" << (rstr | auto_decode(rstr, k, 4)) << endl;
+	cout << "-------------------------" << endl;
 	return 0;
 }
 

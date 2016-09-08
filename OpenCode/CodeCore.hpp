@@ -7,7 +7,7 @@ namespace OpenCode
 {
 	
 	template<typename LT,typename F>
-	auto operator|(LT& target,F effecter)
+	auto operator|(LT& target,F& effecter)
 	{
 		return effecter(target);
 	}

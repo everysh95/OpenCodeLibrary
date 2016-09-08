@@ -15,16 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\OpenCode\CodeCore.h">
+    <ClInclude Include="..\..\OpenCode\CodeCore.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\OpenCode\Decode.h">
+    <ClInclude Include="..\..\OpenCode\Decode.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\OpenCode\EasyCoding.h">
+    <ClInclude Include="..\..\OpenCode\EasyCoding.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\OpenCode\Encode.h">
+    <ClInclude Include="..\..\OpenCode\Encode.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\OpenCode\ListConvert.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\OpenCode\NoiseGenerator.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\OpenCode\KeyGenerator.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

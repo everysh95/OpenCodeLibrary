@@ -1,7 +1,7 @@
 #ifndef G663BF241788548C98D5E972777FF4BD9
 #define G663BF241788548C98D5E972777FF4BD9
 
-#include"CodeCore.h"
+#include"CodeCore.hpp"
 
 namespace OpenCode
 {
