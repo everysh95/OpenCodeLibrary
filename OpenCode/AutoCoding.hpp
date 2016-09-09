@@ -22,14 +22,11 @@ namespace OpenCode
 		{}
 		CLT operator()(VLT& target)
 		{
-			str = target | decode(key) | list_convert_from(target, str, bit_size);
-			return str;
+			return str = target | decode(key) | list_convert_from(target, str, bit_size);
 		}
 		CLT operator()(CLT& target)
 		{
-			str = target | list_convert(target, key) | decode(key) | list_convert_from(key, str, bit_size);
-			target = str;
-			return str;
+			return str = target = target | list_convert(target, key) | (*this);
 		}
 	};
 
@@ -64,22 +61,13 @@ namespace OpenCode
 				buffer = target;
 				buffer | encode(key, 1 << bit_size, distance >> 1);
 			} while ((VLT(buffer) | auto_decode(CLT(), key, bit_size)) != str);
-			target = buffer;
-			str = buffer | list_convert(buffer, str);
+			;
+			str = (target = buffer) | list_convert(buffer, str);
 			return str;
 		}
 		CLT operator()(CLT& target)
 		{
-			VLT in_target = str | list_convert_to(str, key, bit_size);
-			VLT buffer = in_target;
-			do
-			{
-				buffer = in_target;
-				buffer | encode(key, 1 << bit_size, distance >> 1);
-			} while ((VLT(buffer) | auto_decode(CLT(), key, bit_size)) != str);
-			target = buffer | list_convert(buffer, str);
-			str = target;
-			return str;
+			return str = target = str | list_convert_to(str, key, bit_size) | (*this);
 		}
 	};
 
