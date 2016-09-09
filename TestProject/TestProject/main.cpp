@@ -1,7 +1,7 @@
 #include<vector>
 #include<string>
 #include<iostream>
-#include"../../OpenCode/EasyCoding.hpp"
+#include"../../OpenCode/AutoCoding.hpp"
 
 using CodeType = std::vector<unsigned long long>;
 using namespace std;

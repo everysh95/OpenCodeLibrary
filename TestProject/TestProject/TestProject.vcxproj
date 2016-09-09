@@ -144,7 +144,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\OpenCode\CodeCore.hpp" />
     <ClInclude Include="..\..\OpenCode\Decode.hpp" />
-    <ClInclude Include="..\..\OpenCode\EasyCoding.hpp" />
+    <ClInclude Include="..\..\OpenCode\AutoCoding.hpp" />
     <ClInclude Include="..\..\OpenCode\Encode.hpp" />
     <ClInclude Include="..\..\OpenCode\KeyGenerator.hpp" />
     <ClInclude Include="..\..\OpenCode\ListConvert.hpp" />

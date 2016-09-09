@@ -21,9 +21,6 @@
     <ClInclude Include="..\..\OpenCode\Decode.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\OpenCode\EasyCoding.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\OpenCode\Encode.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -34,6 +31,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\..\OpenCode\KeyGenerator.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\OpenCode\AutoCoding.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
