@@ -25,7 +25,7 @@ namespace OpenCode
 					for (size_t i = 0; i < conv && p != e; i++, p++)
 					{
 						b <<= ct_size;
-						b += static_cast<VLT::value_type>(*p) & ((1 << ct_size) - 1);
+						b += static_cast<VLT::value_type>(*p) & ((1ULL << ct_size) - 1);
 					}
 					ans.push_back(b);
 				}
@@ -39,7 +39,7 @@ namespace OpenCode
 					CLT::value_type b = *p;
 					for (int i = conv - 1; i >= 0; i--)
 					{
-						ans.push_back((b >> (vt_size * i)) & ((1 << vt_size) - 1));
+						ans.push_back((b >> (vt_size * i)) & ((1ULL << vt_size) - 1));
 					}
 				}
 			}

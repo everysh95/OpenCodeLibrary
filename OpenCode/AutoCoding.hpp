@@ -58,10 +58,8 @@ namespace OpenCode
 			VLT buffer;
 			do
 			{
-				buffer = target;
-				buffer | encode(key, 1 << bit_size, distance >> 1);
+				(buffer = target) | encode(key, 1ULL << bit_size, distance);
 			} while ((VLT(buffer) | auto_decode(CLT(), key, bit_size)) != str);
-			;
 			str = (target = buffer) | list_convert(buffer, str);
 			return str;
 		}

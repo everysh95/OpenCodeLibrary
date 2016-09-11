@@ -19,10 +19,10 @@ namespace OpenCode
 		KeyGenerator(size_t code_size,size_t distans):code_size(code_size),distans(distans){}
 		LT& operator()(LT& target)
 		{
+			target = LT();
 			std::vector<size_t> buffer;
 			for (size_t i = 0; i < code_size * distans; i++)
 				buffer.push_back(i);
-			LT k;
 			std::random_device rd;
 			for (size_t i = 0; i < code_size; i++)
 			{
@@ -33,9 +33,9 @@ namespace OpenCode
 					size_t bi = uni(rd);
 					size_t ri = buffer[bi];
 					buffer.erase(std::begin(buffer) + bi);
-					LT::value_type raw = 1 << ri;
+					LT::value_type raw = 1ULL << ri;
 					if (count_bit(raw) > 1)
-						raw %= raw << 1;
+						raw %= 1ULL << (ri + 1);
 					l |= raw;
 				}
 				target.push_back(l);
@@ -54,6 +54,7 @@ namespace OpenCode
 		KeyGeneratorOnPass(size_t code_size,size_t distans,PT pass):code_size(code_size),distans(distans),pass(pass){}
 		LT& operator()(LT& target)
 		{
+			target = LT();
 			std::vector<size_t> buffer;
 			for (size_t i = 0; i < code_size * distans; i++)
 				buffer.push_back(i);
@@ -68,9 +69,9 @@ namespace OpenCode
 					size_t bi = uni(rd);
 					size_t ri = buffer[bi];
 					buffer.erase(std::begin(buffer) + bi);
-					LT::value_type raw = 1 << ri;
+					LT::value_type raw = 1ULL << ri;
 					if (count_bit(raw) > 1)
-						raw %= raw << 1;
+						raw %= 1ULL << (ri + 1);
 					l |= raw;
 				}
 				target.push_back(l);
