@@ -3,7 +3,7 @@
 #include<iostream>
 #include<fstream>
 #include<cstdio>
-#include<cstdlib>
+#include<regex>
 #include"../../OpenCode/AutoCoding.hpp"
 #include"../../OpenCode/CodeIO.hpp"
 
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 		code_read(key_file_name, buf);
 		key = buf | list_convert(buf, key);
 	}
-	if (string(argv[1]) == "-pass")
+	if (key.empty())
 	{
 		uint64_t pass;
 		cout << "pass number:" << flush;
@@ -30,11 +30,12 @@ int main(int argc, char** argv)
 	for (int i = 1; i < argc; i++)
 	{
 		string file_name = argv[i];
-		if (key_file_name != file_name)
+		auto pos = file_name.rfind(".cont");
+		if (pos != string::npos && size(file_name) - pos == 5)
 		{
 			string buf;
 			code_read(file_name, buf);
-			code_write(file_name + ".cont", buf | auto_encode(buf, key, 4, 2, 4));
+			code_write(file_name.substr(0, pos), buf | auto_decode(buf, key, 4));
 			remove(file_name.c_str());
 		}
 	}

@@ -51,14 +51,14 @@ int main()
 		{
 			string buf;
 			code_read(file_name, buf);
-			cout << "file_contents:" << (buf | auto_decode(buf, key, 4, 2)) << endl;
+			cout << "file_contents:" << (buf | auto_decode(buf, key, 4)) << endl;
 		}
 		if (com == "rc")
 		{
 			cout << "new_file_contents:" << flush;
 			string buf;
 			cin >> buf;
-			code_write(file_name, buf | auto_encode(buf, key, 4,2, 4));
+			code_write(file_name, buf | auto_encode(buf, key, 4, 4));
 			if(!pass_mode) code_write(key_file_name, key | list_convert(key, string()));
 		}
 		if (com == "rk")
@@ -67,9 +67,9 @@ int main()
 		{
 			string buf;
 			code_read(file_name, buf);
-			buf | auto_decode(buf, key, 4, 2);
+			buf | auto_decode(buf, key, 4);
 			key | key_genaration(key, 1 << 4, 4);
-			code_write(file_name, buf | auto_encode(buf, key, 4, 2, 4));
+			code_write(file_name, buf | auto_encode(buf, key, 4, 4));
 			code_write(key_file_name, key | list_convert(key, string()));
 			pass_mode = false;
 		}

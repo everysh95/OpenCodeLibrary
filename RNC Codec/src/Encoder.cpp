@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 		{
 			string buf;
 			code_read(file_name, buf);
-			code_write(file_name + ".cont", buf | auto_encode(buf, key, 4, 2, 4));
+			code_write(file_name + ".cont", buf | auto_encode(buf, key, 4, 4));
 			remove(file_name.c_str());
 		}
 	}

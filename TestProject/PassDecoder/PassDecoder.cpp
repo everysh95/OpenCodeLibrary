@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 		{
 			string buf;
 			code_read(file_name, buf);
-			code_write(file_name.substr(0, pos), buf | auto_decode(buf, key, 4));
+			code_write(file_name.substr(0, pos), buf | auto_decode(buf, key, 4, 2));
 			remove(file_name.c_str());
 		}
 	}
