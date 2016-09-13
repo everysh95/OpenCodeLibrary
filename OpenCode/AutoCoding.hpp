@@ -29,18 +29,19 @@ namespace OpenCode
 		}
 		CLT operator()(CLT& target)
 		{
-			return str = target = target | list_convert(target, key) | (*this);
+			VLT t = target | list_convert(target, key);
+			return str = target = t | (*this);
 		}
 	};
 
 	template<typename CLT,typename VLT>
-	constexpr AutoDecode<CLT, VLT> auto_decode(CLT& list, VLT& key,size_t bit_size)
+	AutoDecode<CLT, VLT> auto_decode(CLT& list, VLT& key,size_t bit_size)
 	{
 		return AutoDecode<CLT, VLT>(list,key, bit_size);
 	}
 
 	template<typename CLT,typename VLT>
-	constexpr AutoDecode<CLT, VLT> auto_decode(CLT& list, VLT& key,size_t bit_size,size_t decoy)
+	AutoDecode<CLT, VLT> auto_decode(CLT& list, VLT& key,size_t bit_size,size_t decoy)
 	{
 		return AutoDecode<CLT, VLT>(list, key, bit_size, decoy);
 	}
@@ -66,32 +67,35 @@ namespace OpenCode
 		CLT operator()(VLT& target)
 		{
 			target = str | list_convert_to(str, target, bit_size - decoy);
+			CLT bstr;
 			VLT buffer;
+			VLT nbuffer;
 			do
 			{
-				(buffer = target) | list_noise_add(buffer, 1ULL << bit_size, 1ULL << (bit_size - decoy)) | encode(key, 1ULL << bit_size, distance);
-			} while ((VLT(buffer) | auto_decode(CLT(), key, bit_size, decoy)) != str);
+				nbuffer = (buffer = target) | list_noise_add(buffer, 1ULL << bit_size, 1ULL << (bit_size - decoy)) | encode(key, 1ULL << bit_size, distance);
+			} while ((nbuffer | auto_decode(bstr, key, bit_size, decoy)) != str);
 			str = (target = buffer) | list_convert(buffer, str);
 			return str;
 		}
 		CLT operator()(CLT& target)
 		{
-			return str = target = str | list_convert_to(str, key, bit_size) | (*this);
+			VLT t = str | list_convert_to(str, key, bit_size);
+			return str = target = t | (*this);
 		}
 	};
 
 	template<typename CLT,typename VLT>
-	constexpr AutoEncode<CLT, VLT> auto_encode(CLT& list, VLT& key,size_t bit_size,size_t distance)
+	AutoEncode<CLT, VLT> auto_encode(CLT& list, VLT& key,size_t bit_size,size_t distance)
 	{
 		return AutoEncode<CLT, VLT>(list, key, bit_size, distance);
 	}
 	template<typename CLT,typename VLT>
-	constexpr AutoEncode<CLT, VLT> auto_encode(CLT& list, VLT& key,size_t bit_size,size_t decoy,size_t distance)
+	AutoEncode<CLT, VLT> auto_encode(CLT& list, VLT& key,size_t bit_size,size_t decoy,size_t distance)
 	{
 		return AutoEncode<CLT, VLT>(list, key, bit_size, distance, decoy);
 	}
 	template<typename CLT,typename VLT,typename PT = unsigned,typename NG = std::mt19937>
-	constexpr AutoEncode<CLT, VLT,PT,NG> auto_encode(CLT& list, VLT& key,size_t bit_size,size_t decoy,size_t distance,PT pass)
+	AutoEncode<CLT, VLT,PT,NG> auto_encode(CLT& list, VLT& key,size_t bit_size,size_t decoy,size_t distance,PT pass)
 	{
 		return AutoEncode<CLT, VLT, PT, NG>(list, key, bit_size, distance, pass, decoy);
 	}

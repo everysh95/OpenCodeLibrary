@@ -13,10 +13,10 @@
 namespace OpenCode
 {
 	template<typename S,typename CLT>
-	void code_write(S s, CLT& cio)
+	void code_write(S s, CLT cio)
 	{
 		std::ofstream ofs(s, std::ios_base::binary | std::ios_base::out);
-		ofs.write(std::data(cio), std::size(cio));
+		ofs.write(OpenCode::data(cio), std::end(cio) - std::begin(cio));
 		ofs.close();
 	}
 
@@ -28,7 +28,7 @@ namespace OpenCode
 		if (!s)return cio;
 		while (true)
 		{
-			CLT::value_type c = 0;
+			typename CLT::value_type c = 0;
 			s.read(&c, sizeof(c));
 			if (s.eof())break;
 			cio.insert(std::end(cio), c);
@@ -52,7 +52,6 @@ namespace OpenCode
 	template<typename CLT>
 	void show_bits(CLT list)
 	{
-		//std::vector<uint8_t> byte_list = list | list_convert(list, byte_list);
 		for (auto&& b : list)
 		{
 			for (int i = sizeof(b) * 8 - 1; i >= 0; i--)

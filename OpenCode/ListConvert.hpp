@@ -21,11 +21,11 @@ namespace OpenCode
 				auto e = std::end(target);
 				for (auto p = std::begin(target); p != e;)
 				{
-					VLT::value_type b = 0;
+					typename VLT::value_type b = 0;
 					for (size_t i = 0; i < conv && p != e; i++, p++)
 					{
 						b <<= ct_size;
-						b += static_cast<VLT::value_type>(*p) & ((1ULL << ct_size) - 1);
+						b += static_cast<typename VLT::value_type>(*p) & ((1ULL << ct_size) - 1);
 					}
 					ans.push_back(b);
 				}
@@ -36,7 +36,7 @@ namespace OpenCode
 				auto e = std::end(target);
 				for (auto p = std::begin(target); p != e; p++)
 				{
-					CLT::value_type b = *p;
+					typename CLT::value_type b = *p;
 					for (int i = conv - 1; i >= 0; i--)
 					{
 						ans.push_back((b >> (vt_size * i)) & ((1ULL << vt_size) - 1));
@@ -47,26 +47,26 @@ namespace OpenCode
 			{
 				auto e = std::end(target);
 				for (auto p = std::begin(target); p != e; p++)
-					ans.push_back(static_cast<VLT::value_type>(*p));
+					ans.push_back(static_cast<typename VLT::value_type>(*p));
 			}
 			return ans;
 		}
 	};
 
 	template<typename CLT,typename VLT>
-	constexpr ListConvert<CLT,VLT> list_convert(CLT& before,VLT& after)
+	constexpr ListConvert<CLT,VLT> list_convert(const CLT& before,const VLT& after)
 	{
-		return ListConvert<CLT,VLT>(sizeof(CLT::value_type) * 8,sizeof(VLT::value_type) * 8);
+		return ListConvert<CLT,VLT>(sizeof(typename CLT::value_type) * 8,sizeof(typename VLT::value_type) * 8);
 	}
 	template<typename CLT,typename VLT>
-	constexpr ListConvert<CLT,VLT> list_convert_from(CLT& before,VLT& after,size_t before_size)
+	constexpr ListConvert<CLT,VLT> list_convert_from(const CLT& before,const VLT& after,size_t before_size)
 	{
-		return ListConvert<CLT, VLT>(before_size, sizeof(VLT::value_type) * 8);
+		return ListConvert<CLT, VLT>(before_size, sizeof(typename VLT::value_type) * 8);
 	}
 	template<typename CLT,typename VLT>
-	constexpr ListConvert<CLT,VLT> list_convert_to(CLT& before,VLT& after,size_t after_size)
+	constexpr ListConvert<CLT,VLT> list_convert_to(const CLT& before,const VLT& after,size_t after_size)
 	{
-		return ListConvert<CLT, VLT>(sizeof(CLT::value_type) * 8, after_size);
+		return ListConvert<CLT, VLT>(sizeof(typename CLT::value_type) * 8, after_size);
 	}
 
 }

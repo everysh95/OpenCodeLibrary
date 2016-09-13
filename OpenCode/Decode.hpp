@@ -32,13 +32,13 @@ namespace OpenCode
 		LT code_list;
 		size_t list_size;
 	public:
-		Decode(LT code_list):code_list(code_list),list_size(std::size(code_list)){}
+		Decode(LT code_list) :code_list(code_list), list_size(std::end(code_list) - std::begin(code_list)) {}
 		LT& operator()(LT& target)
 		{
-			LT::iterator e = std::end(target);
-			for (LT::iterator p = std::begin(target); p != e; p++)
+			typename LT::iterator e = std::end(target);
+			for (typename LT::iterator p = std::begin(target); p != e; p++)
 			{
-				LT::value_type  vp = *p;
+				typename LT::value_type  vp = *p;
 				decode(vp, (decltype(vp))list_size,code_list);
 				*p = vp;
 			}
@@ -48,7 +48,7 @@ namespace OpenCode
 
 
 	template<typename LT>
-	constexpr Decode<LT> decode(LT list)
+	Decode<LT> decode(LT list)
 	{
 		return Decode<LT>(list);
 	}

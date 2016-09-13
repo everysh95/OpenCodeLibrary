@@ -35,10 +35,10 @@ namespace OpenCode
 		}
 		LT& operator()(LT& target)
 		{
-			LT::iterator e = std::end(target);
-			for (LT::iterator p = std::begin(target); p != e; p++)
+			typename LT::iterator e = std::end(target);
+			for (typename LT::iterator p = std::begin(target); p != e; p++)
 			{
-				LT::value_type vp = *p;
+				typename LT::value_type vp = *p;
 				*p = vp ^ (*this)();
 			}
 			return target;
@@ -47,28 +47,31 @@ namespace OpenCode
 	};
 
 	template<typename LT>
-	constexpr auto encode(LT& list,size_t code_size,size_t disttans)
+	auto noise_generation(LT& list, size_t code_size, size_t distans)
 	{
-		return Encode<LT, NoiseGenerator<LT::value_type,LT> >(list, NoiseGenerator<LT::value_type,LT>(code_size, disttans));
+		NoiseGenerator<typename LT::value_type, LT> ans(code_size, distans);
+		return ans;
 	}
 
 	template<typename LT>
-	constexpr auto noise_generation(LT& list, size_t code_size, size_t distans)
+	auto encode(LT& list,size_t code_size,size_t distans)
 	{
-		return NoiseGenerator<LT::value_type, LT>(code_size, distans);
+		NoiseGenerator<typename LT::value_type, LT> ng(code_size, distans);
+		Encode<LT, decltype(ng) > ans(list, ng);
+		return ans;
 	}
 
 	template<typename T,typename LT>
 	class ListNoiseAdder
 	{
 		std::random_device rd;
-		std::uniform_int<T> value_uniform;
+		std::uniform_int_distribution<T> value_uniform;
 	public:
 		ListNoiseAdder(size_t code_size, size_t text_size) :value_uniform(text_size, code_size - 1) {}
 		ListNoiseAdder(ListNoiseAdder<T,LT>& that) :value_uniform(that.value_uniform) {}
 		LT& operator()(LT& list)
 		{
-			uniform_int<long long> index_uniform(0, static_cast<long long>(std::size(list)));
+			std::uniform_int_distribution<long long> index_uniform(0, static_cast<long long>(std::end(list) - std::begin(list)));
 			for (long long i = index_uniform(rd); i >= 0; i--)
 				list.insert(std::begin(list) + index_uniform(rd), value_uniform(rd));
 			return list;
@@ -76,9 +79,10 @@ namespace OpenCode
 	};
 
 	template<typename LT>
-	constexpr auto list_noise_add(LT& list, size_t bit_size, size_t decoy_size)
+	ListNoiseAdder<typename LT::value_type, LT> list_noise_add(LT& list, size_t bit_size, size_t decoy_size)
 	{
-		return ListNoiseAdder<LT::value_type, LT>(bit_size, decoy_size);
+		ListNoiseAdder<typename LT::value_type, LT> lna(bit_size, decoy_size);
+		return lna;
 	}
 
 	template<typename T,typename LT>
@@ -100,9 +104,9 @@ namespace OpenCode
 	};
 
 	template<typename LT>
-	constexpr auto list_noise_remove(LT& list, size_t bit_size, size_t text_size)
+	auto list_noise_remove(LT& list, size_t bit_size, size_t text_size)
 	{
-		return ListNoiseRemover<LT::value_type, LT>(bit_size, text_size);
+		return ListNoiseRemover<typename LT::value_type, LT>(bit_size, text_size);
 	}
 }
 

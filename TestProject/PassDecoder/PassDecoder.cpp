@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 	{
 		string file_name = argv[i];
 		auto pos = file_name.rfind(".cont");
-		if (pos != string::npos && size(file_name) - pos == 5)
+		if (pos != string::npos && file_name.size() - pos == 5)
 		{
 			string buf;
 			code_read(file_name, buf);

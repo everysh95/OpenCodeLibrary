@@ -90,9 +90,7 @@ int main()
 			pass_mode = true;
 		}
 		if (com == "op")
-		{
 			cin >> file_name;
-		}
 		if (com == "rm")
 			remove(file_name.c_str());
 

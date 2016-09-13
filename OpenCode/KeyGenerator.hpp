@@ -26,14 +26,14 @@ namespace OpenCode
 			std::random_device rd;
 			for (size_t i = 0; i < code_size; i++)
 			{
-				LT::value_type l = 0;
+				typename LT::value_type l = 0;
 				for (int j = 0; j < distans; j++)
 				{
-					std::uniform_int_distribution<size_t> uni(0, std::size(buffer) - 1);
+					std::uniform_int_distribution<size_t> uni(0, std::end(buffer) - std::begin(buffer) - 1);
 					size_t bi = uni(rd);
 					size_t ri = buffer[bi];
 					buffer.erase(std::begin(buffer) + bi);
-					LT::value_type raw = 1ULL << ri;
+					typename LT::value_type raw = 1ULL << ri;
 					if (count_bit(raw) > 1)
 						raw %= 1ULL << (ri + 1);
 					l |= raw;
@@ -62,14 +62,14 @@ namespace OpenCode
 			NG rd(pass);
 			for (size_t i = 0; i < code_size; i++)
 			{
-				LT::value_type l = 0;
+				typename LT::value_type l = 0;
 				for (int j = 0; j < distans; j++)
 				{
-					std::uniform_int_distribution<size_t> uni(0, std::size(buffer) - 1);
+					std::uniform_int_distribution<size_t> uni(0, std::end(buffer) - std::begin(buffer) - 1);
 					size_t bi = uni(rd);
 					size_t ri = buffer[bi];
 					buffer.erase(std::begin(buffer) + bi);
-					LT::value_type raw = 1ULL << ri;
+					typename LT::value_type raw = 1ULL << ri;
 					if (count_bit(raw) > 1)
 						raw %= 1ULL << (ri + 1);
 					l |= raw;

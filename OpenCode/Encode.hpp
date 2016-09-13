@@ -23,14 +23,14 @@ namespace OpenCode
 		LT code_list;
 		FT noise_generator;
 	public:
-		Encode(LT code_list,FT noise_generator):code_list(code_list),noise_generator(noise_generator){}
-		Encode(Encode<LT,FT>& ref_s):code_list(ref_s.code_list),noise_generator(ref_s.noise_generator){}
+		constexpr Encode(LT code_list,FT noise_generator):code_list(code_list),noise_generator(noise_generator){}
+		constexpr Encode(Encode<LT,FT>& ref_s):code_list(ref_s.code_list),noise_generator(ref_s.noise_generator){}
 		LT& operator()(LT& target)
 		{
-			LT::iterator e = std::end(target);
-			for (LT::iterator p = std::begin(target); p != e; p++)
+			typename LT::iterator e = std::end(target);
+			for (typename LT::iterator p = std::begin(target); p != e; p++)
 			{
-				LT::value_type vp = *p;
+				typename LT::value_type vp = *p;
 				encode(vp, noise_generator() , code_list);
 				*p = vp;
 			}

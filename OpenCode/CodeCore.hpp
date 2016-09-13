@@ -7,7 +7,7 @@ namespace OpenCode
 {
 	
 	template<typename LT,typename F>
-	auto operator|(LT& target,F& effecter) -> decltype(effecter(target))
+	auto operator|(LT& target,F&& effecter) -> decltype(effecter(target))
 	{
 		return effecter(target);
 	}
@@ -16,6 +16,12 @@ namespace OpenCode
 	constexpr CT count_bit(CT target)
 	{
 		return (target > 0) ? target % 2 + count_bit(target >> 1) : 0;
+	}
+
+	template<typename LT>
+	constexpr auto data(LT list) -> decltype(list.data())
+	{
+		return list.data();
 	}
 
 }
