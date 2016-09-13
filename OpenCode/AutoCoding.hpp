@@ -25,7 +25,7 @@ namespace OpenCode
 		{}
 		CLT operator()(VLT& target)
 		{
-			return str = target | decode(key) | list_noise_remove(target, 1ULL << bit_size, 1ULL << decoy) | list_convert_from(target, str, bit_size - decoy);
+			return str = target | decode(key) | list_noise_remove(target, 1ULL << bit_size, 1ULL << (bit_size - decoy)) | list_convert_from(target, str, bit_size - decoy);
 		}
 		CLT operator()(CLT& target)
 		{
@@ -69,7 +69,7 @@ namespace OpenCode
 			VLT buffer;
 			do
 			{
-				(buffer = target) | list_noise_add(buffer, 1ULL << bit_size, 1ULL << decoy) | encode(key, 1ULL << bit_size, distance);
+				(buffer = target) | list_noise_add(buffer, 1ULL << bit_size, 1ULL << (bit_size - decoy)) | encode(key, 1ULL << bit_size, distance);
 			} while ((VLT(buffer) | auto_decode(CLT(), key, bit_size, decoy)) != str);
 			str = (target = buffer) | list_convert(buffer, str);
 			return str;

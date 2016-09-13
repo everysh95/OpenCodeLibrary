@@ -5,8 +5,7 @@ all:\
 	PassDecoder
 
 %:%.cpp
-	g++ -std=c++14 -o $@ $< \
-	mv $@ ..
+	g++ -std=c++11 -o $@ $< | mv $@ ..
 
 Encoder:Encoder.cpp
 Decoder:Decoder.cpp

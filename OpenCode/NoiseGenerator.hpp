@@ -64,7 +64,7 @@ namespace OpenCode
 		std::random_device rd;
 		std::uniform_int<T> value_uniform;
 	public:
-		ListNoiseAdder(size_t code_size, size_t decoy_size) :value_uniform(code_size - decoy_size,code_size - 1) {}
+		ListNoiseAdder(size_t code_size, size_t text_size) :value_uniform(text_size, code_size - 1) {}
 		ListNoiseAdder(ListNoiseAdder<T,LT>& that) :value_uniform(that.value_uniform) {}
 		LT& operator()(LT& list)
 		{
@@ -85,12 +85,12 @@ namespace OpenCode
 	class ListNoiseRemover
 	{
 		size_t code_size;
-		size_t decoy_size;
+		size_t text_size;
 	public:
-		ListNoiseRemover(size_t code_size, size_t decoy_size) :code_size(code_size),decoy_size(decoy_size) {}
+		ListNoiseRemover(size_t code_size, size_t text_size) :code_size(code_size),text_size(text_size) {}
 		LT& operator()(LT& list)
 		{
-			for (size_t i = code_size - decoy_size; i < code_size; i++)
+			for (size_t i = text_size; i < code_size; i++)
 			{
 				auto np = std::remove(std::begin(list), std::end(list), i);
 				list.erase(np, std::end(list));
@@ -100,9 +100,9 @@ namespace OpenCode
 	};
 
 	template<typename LT>
-	constexpr auto list_noise_remove(LT& list, size_t bit_size, size_t decoy_size)
+	constexpr auto list_noise_remove(LT& list, size_t bit_size, size_t text_size)
 	{
-		return ListNoiseRemover<LT::value_type, LT>(bit_size, decoy_size);
+		return ListNoiseRemover<LT::value_type, LT>(bit_size, text_size);
 	}
 }
 

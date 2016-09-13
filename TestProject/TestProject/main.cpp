@@ -58,7 +58,7 @@ int main()
 			cout << "new_file_contents:" << flush;
 			string buf;
 			cin >> buf;
-			code_write(file_name, buf | auto_encode(buf, key, 4,2, 4));
+			code_write(file_name, buf | auto_encode(buf, key, 4, 2, 4));
 			if(!pass_mode) code_write(key_file_name, key | list_convert(key, string()));
 		}
 		if (com == "rk")
