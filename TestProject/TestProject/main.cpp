@@ -44,8 +44,7 @@ int main()
 			show_bits(key);
 			cout << "flie key bits" << endl;
 			code_read(key_file_name, buf);
-			key = buf | list_convert(buf, key);
-			show_bits(key);
+			show_bits(buf | list_convert(buf, key));
 		}
 		if (com == "sc")
 		{

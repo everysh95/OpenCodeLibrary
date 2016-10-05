@@ -16,14 +16,15 @@ namespace OpenCode
 	void code_write(S s, CLT cio)
 	{
 		std::ofstream ofs(s, std::ios_base::binary | std::ios_base::out);
-		ofs.write(OpenCode::data(cio), std::end(cio) - std::begin(cio));
+		for(auto&& c : cio)
+			ofs.write(&c, sizeof(c));
 		ofs.close();
 	}
 
 	template<typename S,typename CLT>
 	CLT code_read(S file_name, CLT& cio)
 	{
-		std::ifstream s(file_name, std::ios_base::binary | std::ios_base::out);
+		std::ifstream s(file_name, std::ios_base::binary | std::ios_base::in);
 		cio = CLT();
 		if (!s)return cio;
 		while (true)
